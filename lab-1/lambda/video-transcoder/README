@@ -2,3 +2,10 @@ README
 
 1. Run "npm install" to install dependencies
 2. Run "npm run deploy" to deploy to AWS
+
+
+#### To Create all aws resources via terraform
+```sh
+terraform plan -var 'access_key=<your access key>' -var 'secret_key=<your secret key>'
+terraform apply -var 'access_key=<your access key>' -var 'secret_key=<your secret key>'
+```
