@@ -321,6 +321,7 @@ resource "aws_api_gateway_authorizer" "custom-authorizer" {
   name                   = "custom-authorizer"
   rest_api_id            = "${aws_api_gateway_rest_api.api-gateway-24-hour-video.id}"
   authorizer_uri         = "arn:aws:apigateway:${var.region}:lambda:path/2015-03-31/functions/${aws_lambda_function.serverless-custom-authorizer-lambda.arn}/invocations"
+  authorizer_result_ttl_in_seconds = "300"
 }
 
 resource "aws_api_gateway_method" "api-gateway-method-user-profile" {
