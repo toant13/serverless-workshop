@@ -32,10 +32,14 @@ resource "aws_s3_bucket" "serverless-video-upload" {
   }
 
   cors_rule {
-    allowed_origins = ["*"]
-    allowed_methods = ["GET","POST"]
+    allowed_origins = [
+      "*"]
+    allowed_methods = [
+      "GET",
+      "POST"]
     max_age_seconds = 3000
-    allowed_headers = ["*"]
+    allowed_headers = [
+      "*"]
   }
 }
 
@@ -182,8 +186,8 @@ resource "aws_elastictranscoder_pipeline" "serverless-elastic-transcoder" {
 }
 
 resource "aws_lambda_function" "serverless-transcode-video-lambda" {
-  filename = "../lab-1/lambda/video-transcoder/Lambda-Deployment.zip"
-  source_code_hash = "${base64sha256(file("../lab-1/lambda/video-transcoder/Lambda-Deployment.zip"))}"
+  filename = "../lab-5/lambda/transcode-video-firebase-enabled/Lambda-Deployment.zip"
+  source_code_hash = "${base64sha256(file("../lab-5/lambda/transcode-video-firebase-enabled/Lambda-Deployment.zip"))}"
   function_name = "${var.serverless-transcode-video-lambda}"
   description = "transcodes videos from upload bucket and then puts them into the transcode bucket"
   role = "${aws_iam_role.lambda-s3-execution-role.arn}"
@@ -194,7 +198,9 @@ resource "aws_lambda_function" "serverless-transcode-video-lambda" {
   environment = {
     variables = {
       ELASTIC_TRANSCODER_REGION = "us-east-1",
-      ELASTIC_TRANSCODER_PIPELINE_ID = "${aws_elastictranscoder_pipeline.serverless-elastic-transcoder.id}"
+      ELASTIC_TRANSCODER_PIPELINE_ID = "${aws_elastictranscoder_pipeline.serverless-elastic-transcoder.id}",
+      SERVICE_ACCOUNT = "serverless-workshop-8ac59be5a83f.json",
+      DATABASE_URL = "https://serverless-workshop-3b5cd.firebaseio.com/"
     }
   }
 
@@ -325,9 +331,9 @@ resource "aws_lambda_function" "serverless-custom-authorizer-lambda" {
 }
 
 resource "aws_api_gateway_authorizer" "custom-authorizer" {
-  name                   = "custom-authorizer"
-  rest_api_id            = "${aws_api_gateway_rest_api.api-gateway-24-hour-video.id}"
-  authorizer_uri         = "arn:aws:apigateway:${var.region}:lambda:path/2015-03-31/functions/${aws_lambda_function.serverless-custom-authorizer-lambda.arn}/invocations"
+  name = "custom-authorizer"
+  rest_api_id = "${aws_api_gateway_rest_api.api-gateway-24-hour-video.id}"
+  authorizer_uri = "arn:aws:apigateway:${var.region}:lambda:path/2015-03-31/functions/${aws_lambda_function.serverless-custom-authorizer-lambda.arn}/invocations"
   authorizer_result_ttl_in_seconds = "300"
 }
 
@@ -337,7 +343,8 @@ resource "aws_api_gateway_method" "api-gateway-method-user-profile" {
   http_method = "GET"
   authorization = "CUSTOM"
   authorizer_id = "${aws_api_gateway_authorizer.custom-authorizer.id}"
-  depends_on = ["aws_api_gateway_authorizer.custom-authorizer"]
+  depends_on = [
+    "aws_api_gateway_authorizer.custom-authorizer"]
 }
 
 
@@ -356,8 +363,8 @@ resource "aws_lambda_function" "serverless-get-upload-policy-lambda" {
   memory_size = 128
   environment = {
     variables = {
-      ACCESS_KEY_ID  = "${aws_iam_access_key.upload-s3-key.id}",
-      SECRET_ACCESS_KEY   = "${aws_iam_access_key.upload-s3-key.secret}",
+      ACCESS_KEY_ID = "${aws_iam_access_key.upload-s3-key.id}",
+      SECRET_ACCESS_KEY = "${aws_iam_access_key.upload-s3-key.secret}",
       UPLOAD_BUCKET = "${aws_s3_bucket.serverless-video-upload.bucket}"
     }
   }
@@ -372,7 +379,7 @@ resource "aws_iam_user" "upload-s3" {
 }
 
 resource "aws_iam_access_key" "upload-s3-key" {
-  user    = "${aws_iam_user.upload-s3.name}"
+  user = "${aws_iam_user.upload-s3.name}"
 }
 
 
@@ -417,6 +424,50 @@ resource "aws_api_gateway_method" "api-gateway-method-s3-policy-document" {
   resource_id = "${aws_api_gateway_resource.api-resource-s3-policy-document.id}"
   http_method = "GET"
   authorization = "NONE"
-//  authorizer_id = "${aws_api_gateway_authorizer.custom-authorizer.id}"
-//  depends_on = ["aws_api_gateway_authorizer.custom-authorizer"]
+}
+
+/* ******************* LAB 5 RESOURCES ******************* */
+
+resource "aws_lambda_function" "serverless-push-transcoded-url-to-firebase-lambda" {
+  filename = "../lab-5/lambda/push-transcoded-url-to-firebase/Lambda-Deployment.zip"
+  source_code_hash = "${base64sha256(file("../lab-5/lambda/push-transcoded-url-to-firebase/Lambda-Deployment.zip"))}"
+  function_name = "${var.serverless-push-transcoded-url-to-firebase-lambda}"
+  description = "push transcoded"
+  role = "${aws_iam_role.lambda-s3-execution-role.arn}"
+  handler = "index.handler"
+  runtime = "nodejs6.10"
+  timeout = 80
+  memory_size = 128
+  environment = {
+    variables = {
+      S3 = "${aws_s3_bucket.serverless-video-transcoded.bucket}",
+      DATABASE_URL = "https://serverless-workshop-3b5cd.firebaseio.com/",
+      SERVICE_ACCOUNT = "serverless-workshop-8ac59be5a83f.json",
+      BUCKET_REGION = "${var.region}"
+      TEST ="t"
+    }
+  }
+
+  depends_on = [
+    "aws_iam_role.lambda-s3-execution-role",
+    "aws_iam_user.upload-s3"]
+}
+
+resource "aws_lambda_permission" "serverless-video-transcoded-lambda-permission" {
+  statement_id = "serverless-video-transcoded-lambda-permission"
+  action = "lambda:InvokeFunction"
+  function_name = "${aws_lambda_function.serverless-push-transcoded-url-to-firebase-lambda.function_name}"
+  principal = "s3.amazonaws.com"
+  source_arn = "${aws_s3_bucket.serverless-video-transcoded.arn}"
+}
+
+resource "aws_s3_bucket_notification" "transcoded-bucket_notification" {
+  bucket = "${aws_s3_bucket.serverless-video-transcoded.id}"
+
+  lambda_function {
+    lambda_function_arn = "${aws_lambda_function.serverless-push-transcoded-url-to-firebase-lambda.arn}"
+    events = [
+      "s3:ObjectCreated:*"]
+    filter_suffix = ".mp4"
+  }
 }

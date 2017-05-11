@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "serverless-workshop-3b5cd",
+  "private_key_id": "8ac59be5a83ff11f29adccbee4aa08297807edbd",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDPNRGjReYn7YkP\naVybM6JrvK18acifyoddox9efYpAltWCGXFrqJ9oIC6ObgePBc94/7JybBWyzkih\nlG0Nekb4MQgGBb+HDwlsEByQFf7N3VH1/LOyjmzfWfBBNbsQnRl0OOMEGlGTfGm5\nRIjNo8H9LJUFrwu54zqs+UcbI32BCf3/PBM9pzHGvxsnF+pxwzBjTk2Pe/tXNan4\n+v/mgMXYuZiL2bmKQRmhD9rUuh6zDm7aC3P2z4sOkge/iKIv1z/eCTiC3WpWSM56\nO76wyexANncXpQG9RWLyL3kt1T+sqhBRO1l9hoHnQFgwTTbBsssyif4O6DeZ/ciL\ndPrjzf5HAgMBAAECggEBAL9xcc1fvKlxXywdFdHToCJYnhWQCywPzIfoOghshzrr\n4XKlnVRx5G4pJbq00EkFfk52OOJdGKMu0o5ve15zdnTDoH0n/HCFpRfxvuIlYFnG\nPX7ALysvSkoGZ+NoCGDuNWFbWewlgO96iJgDST5uKcKH2Vv6AiSKXGEKo/bgEIoS\nDe27VtVwv8IqRDhRcshFrTBxZdpQxzx8mbspubWG7zuhaEfb25cPVT0fBuGHWjzC\nDtmzabUjalXHr61sN5MiP+fX/kR62AFV/kbeZvoN4d3PtMw+4/2hd8ImHEikYI2s\ntmDf+Xv3ZPSZLC6g0Rh8WwGlDFoTkHJ6ylHAIPsNbGkCgYEA9SqfBoEK92zjZbU8\ncv84RJs6fYEVaLCiwIPKvsTVzxBFNyvV+Lu6dm9bHCGKy9F0kIQcc/MB4Vp/YQCH\nJaNIWHSS0769rgPviDE7o6rum7uXlyRmPuVFFUx0AjPFEbkATzzOQ4MMSBrA151S\nwn1WxNYahLw9iXzcvfcyHkcms60CgYEA2F0Ldi8sgI3+8STEq24PKFC11K7G5LdX\nmUCdBTjRF3hl0e+bxHsoTxEQ5AVebmzX/48fWzuAHA+7e+i/awXui8b/6YFxJixh\n+iJFQKcoawG7kQvSqrnXkQC0CwYvlC9dAp4HNdTLkvFggTAhpKhZqM6yZGctJACy\nIhrTxau/2EMCgYEAy/nAAWtPsnf34eEeABdzuzDjQxQoucdsQXvlLT8bHIHO9I4W\nIjIeevc++HK3xcfokWw5OAcQo2vl2tDToG7vfBjRKDbkHWnM2qULl6pZh1xWTTvN\njbq29Xd8dXCZH5uqNELE4cqgZ0VK+Jk+B+68SFxSB+mN0Vv/VFXcbvCHtKkCgYBv\neLigAjv2W7IewWfGPuT2S2bzFb0JN2CdZ4m+mAA6DGDBIabqOt2QpuVB5XY6hD9g\nvndURLqDOqPIeiis1hiJ0VQmFPebyEAOZDuzzKtpPjJJz4KRTUA/x9H64AwBV8me\nwJZMaL8djNjAlnCu6cGP1DZavkGmi+k64wF6lTs5CwKBgH4hppnQm+DxWdagP0AG\nQ/caJoHWtwFJtWj6fA9n7U3KZeRZsZPAJwbEPBPyIBlqu7EVMtSSKIjc5Z3SrWn8\nfdduhYmif3dl23KiIFt6l5hLpa528f64YKD4QOXw4jzXohGV2oYOIQs1S2ykqSpG\nfZmAHPwNjRuinpc+BE3jimbr\n-----END PRIVATE KEY-----\n",
+  "client_email": "workshop@serverless-workshop-3b5cd.iam.gserviceaccount.com",
+  "client_id": "114760276019609353161",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/workshop%40serverless-workshop-3b5cd.iam.gserviceaccount.com"
+}

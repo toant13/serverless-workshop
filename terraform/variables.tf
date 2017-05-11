@@ -52,3 +52,8 @@ variable "serverless-get-upload-policy-lambda" {
   //enter the preferred name for a lambda
   default = "get-upload-policy"
 }
+
+variable "serverless-push-transcoded-url-to-firebase-lambda" {
+  //enter the preferred name for a lambda
+  default = "push-transcoded-url-to-firebase"
+}

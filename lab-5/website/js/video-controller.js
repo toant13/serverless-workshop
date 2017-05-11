@@ -63,12 +63,14 @@ var videoController = {
         var that = this;
 
         /* PASTE CONFIG HERE */
-        // var config = {
-        //   apiKey: "",
-        //   authDomain: "",
-        //   databaseURL: "",
-        //   storageBucket: "",
-        // };
+        var config = {
+            apiKey: "AIzaSyCZoILhoTGAIx2pJhiW7bQoa0I8_HJUOxg",
+            authDomain: "serverless-workshop-3b5cd.firebaseapp.com",
+            databaseURL: "https://serverless-workshop-3b5cd.firebaseio.com",
+            projectId: "serverless-workshop-3b5cd",
+            storageBucket: "serverless-workshop-3b5cd.appspot.com",
+            messagingSenderId: "390642760466"
+        };
 
         firebase.initializeApp(config);
 
