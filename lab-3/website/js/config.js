@@ -1,7 +1,7 @@
 var configConstants = {
     auth0: {
-        domain: 'YOUR_AUTH0_DOMAIN_HERE',
-        clientId: 'YOUR_AUTH0_CLIENT_ID_HERE'
+        domain: 'ttran.auth0.com',
+        clientId: 'D6eDLSYFBGnwzaaI6t6N9LrPFlnbEcYE'
     },
-    apiBaseUrl: 'YOUR_API_BASE_URL_HERE_NO_TRAILING_SLASH'
+    apiBaseUrl: 'https://wbbhmymtal.execute-api.us-east-1.amazonaws.com/dev'
 };
