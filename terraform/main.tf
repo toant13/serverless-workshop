@@ -440,7 +440,7 @@ resource "aws_lambda_function" "serverless-push-transcoded-url-to-firebase-lambd
   memory_size = 128
   environment = {
     variables = {
-      S3 = "${aws_s3_bucket.serverless-video-transcoded.bucket}",
+      S3 = "https://s3.amazonaws.com/${aws_s3_bucket.serverless-video-transcoded.bucket}",
       DATABASE_URL = "https://serverless-workshop-3b5cd.firebaseio.com/",
       SERVICE_ACCOUNT = "serverless-workshop-8ac59be5a83f.json",
       BUCKET_REGION = "${var.region}"
@@ -468,6 +468,6 @@ resource "aws_s3_bucket_notification" "transcoded-bucket_notification" {
     lambda_function_arn = "${aws_lambda_function.serverless-push-transcoded-url-to-firebase-lambda.arn}"
     events = [
       "s3:ObjectCreated:*"]
-    filter_suffix = ".mp4"
+    filter_suffix = "mp4"
   }
 }
